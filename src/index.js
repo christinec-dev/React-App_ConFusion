@@ -1,9 +1,12 @@
+//package and compnent imports
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//This will display the application and interface onto the web server
 ReactDOM.render(
   <React.StrictMode>
     <App />
