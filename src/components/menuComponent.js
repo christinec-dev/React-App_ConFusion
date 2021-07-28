@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 //import bootrap components from reactstrap library
 //NOTE: The media query returns a CSS style 
 import { Card, CardImgOverlay, CardImg, CardBody, CardText, CardTitle  } from 'reactstrap';
+import DishDetail from './DishdetailComponent';
+
 
 //creates Menu component
 class Menu extends Component {
@@ -26,25 +28,25 @@ class Menu extends Component {
         this.setState({selectedDish: dish});
     }
 
-    //if dish is clicked it will show card details, else nothing
-    renderDish(dish) {
-        if(dish != null) {
-            return(
-            <Card>
-                <CardImg width="100%" src={dish.image} alt={dish.name} />
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-            </Card>
-            );
+   //if dish is clicked it will show card details, else nothing
+   renderDish(dish) {
+    if(dish != null) {
+        return(
+        <Card>
+            <CardImg width="100%" src={dish.image} alt={dish.name} />
+                <CardBody>
+                    <CardTitle>{dish.name}</CardTitle>
+                    <CardText>{dish.description}</CardText>
+                </CardBody>
+        </Card>
+        );
         } else {
             return(
                 <div></div>
             )
         }
     }
-
+    
     //return a value or function that will be called
     render() {
 
@@ -54,7 +56,7 @@ class Menu extends Component {
             return (
                 <div key={dish.id} className="col-12 col-md-5 m-1">
                       {/* When clicked on, it will run event function*/} 
-                       <Card onClick={() => this.onDishSelect(dish)}>
+                      <Card onClick={() => this.onDishSelect(dish.id, dish.comments)}>
                             <CardImg width="100%" src={dish.image} alt={dish.name} />
 
                             <CardImgOverlay body className="ml-5">
@@ -73,8 +75,13 @@ class Menu extends Component {
                     {menu}
             </div>
             <div className="row">
-                 {/* This will return the clicked card dish items when clicked */}             
-                    {this.renderDish(this.state.selectedDish)}
+                 {/* This will return the clicked card dish items when clicked */} 
+                 <div className="col-12 col-md-5 m-1">          
+                    {this.renderDish(this.state.selectedDish)},
+                </div> 
+                <div className="col-12 col-md-5 m-1">          
+                    <DishDetail dishes={this.state.dishes} />
+                </div>  
             </div>
         </div>
         );

@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import React, {Component} from 'react';
 import { NavbarBrand, Navbar } from 'reactstrap';
 import Menu from './components/menuComponent';
+import DishDetail from './components/DishdetailComponent';
+
 import './App.css';
 import {DISHES} from './shared/dishes';
 
@@ -17,11 +19,21 @@ class App extends Component {
     //required when you create a component in react
     super(props);
 
-    //This will return the state of the javasctript object called dishes which will call the shared prop DISHES
-    this.state = {
-      dishes: DISHES
-    };
+   
+    //when document is loaded no card has been selected by default
+        this.state = {
+          dishes: DISHES,
+          selectedDish: null,
+          comments: null
+      };
   }
+
+  //when dishg is clicked, it will render details of dish
+  onDishSelect(dish) {
+      this.setState({ selectedDish: dish});
+      
+  }
+
 
   render () {
     return (    
@@ -36,7 +48,7 @@ class App extends Component {
       </Navbar>
   
      {/* The Menu component from the menuComponent.js file is rendered here and displayed when the index.js is loaded */}
-      <Menu dishes={this.state.dishes} />
+     <Menu dishes={this.state.dishes} />
     </div>
   );
   }
