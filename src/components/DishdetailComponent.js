@@ -1,83 +1,96 @@
-//package imports
+//package and component imports
 import React, { Component } from 'react';
-//import bootrap components from reactstrap library
-//NOTE: The media query returns a CSS style 
+import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
 
-
-//creates Dishdetail component
+//creates DishDetail component
 class DishDetail extends Component {
-    
-    //define a constructor for it
-    constructor(props) {
-        //Props is read-only and are used to pass data, whereas state is for managing data and can be modified by its own component
+     //define a constructor for it
+    constructor (props) {
 
-        //required when you create a component in react
-        super(props);
-        
-        //when document is loaded no card has been selected by default
-        this.state = {
-            selectedDish: null,
-            comments: null
-        };
+    //Props is read-only and are used to pass data, whereas state is for managing data and can be modified by its own component
+
+    //required when you create a component in react
+    super(props);
+
     }
 
-    onDishSelect(comments) {
-        this.setState({comments: comments});
-    }
-
-   //if dish is clicked it will show card comments, else nothing
-   
-    renderComments(comments) {
-        if (comments != null){
-                return (
-                        <ul key={comments.id} className="list-unstyled">
-                            <li className="comment">{comments.comment}</li>
-                            <li className="author"> {comments.author}</li>
-                            <li className="date"> {comments.date}</li>
-                        </ul>   
-                )       
-        }
-        else {
-            return(
+   //if dish is clicked it will show card details, else nothing
+    renderDish(dish) {
+        //if dish array is not equal to null, display details in half grid
+        if (dish != null)
+            return (
+                //col-12 for sm and xs, and col-5 for md and lg screens with margin @ 1
+                <Card className="col-12 col-md-5 m-1">
+                   {/* Displays the dish image, details and name */}
+                    <CardImg width="100%" src={dish.image} alt={dish.name} />
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
+                </Card>
+            );
+        //if the dish contains nothing, show nothing
+        else
+            return (
                 <div></div>
-            )
+            );
+    }
+
+    //if dish is clicked it will show dish comments, else nothing
+    renderComments(array) {
+        //if dish array is not equal to null, display comments in half grid
+        if (array.length != 0) {
+            return (
+                //col-12 for sm and xs, and col-5 for md and lg screens with margin @ 1
+                <div className="col-12 col-md-5 m-1">
+                    {/* Displays the comment title, and details of author, date and comment */}
+                    <h4>Comments</h4>                  
+                    {/* //will iterate (map) over the comments list and return each key (item) uniquely */}
+                    { array.map (comment => (
+                        <ul className="list-unstyled">
+                            <li>
+                                <p>{comment.comment}</p>
+                                <p><i> - {comment.author} </i>, {comment.date}</p>
+                            </li>
+                        </ul>
+                    ))
+                    }
+                </div>
+            );
+        }
+        //if the dish contains nothing, show nothing
+        else {
+            return (
+                <div></div>
+            );
+
         }
     }
 
-    //return a value or function that will be called
+    //This will return a comment list that will be defined
     render() {
-
-    //will iterate (map) over the dishes list and return each key (item) uniquely
-    const details = this.props.comments.map((comments) => {
-            return (         
-                <div className="container">
-                    <div className="row">  
-                    <div className="col-12 col-md-5 m-1">
-                        <h4>Comments</h4>
-                        <div>{comments}</div>  
-                    </div>
-                    </div>
+        //define dish (otherwise TypeError occurs)
+        let dish;
+        //if the dish is selected, show the details and comments of the dish in respected column order
+        if (this.props.selectedDish) {
+            dish = (
+                <div className="row">
+                    {this.renderDish(this.props.selectedDish)}
+                    {this.renderComments(this.props.selectedDish.comments)}
                 </div>
-        );
-    });
-
-    return (
-        //This will return a menu list that will be defined
-        <div className="container">
-            <div className="row">
-                 {/* This will return the menu items */}             
-                    {details}
+            )
+        //if the dish is not selected, show nothing
+        } else {
+            dish = <div></div>
+        }
+        //output the respective dish
+        return (
+            <div className="container">
+                {dish}
             </div>
-            <div className="row">
-                 {/* This will return the clicked card dish items when clicked */}             
-                 {this.renderComments(this.state.selectedDish)},
-            </div>
-        </div>
         );
+        }
     }
-}
-  
 
-      
 //exports it for use in other files
 export default DishDetail;
