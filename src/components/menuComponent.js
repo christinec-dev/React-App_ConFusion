@@ -32,7 +32,7 @@ import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
             return (
                 <div className="container">
                     {/* This will return the clicked card dish items when clicked */} 
-                    <div className="row">
+                    <div className="row card-row">
                         {menu}
                     </div>
                 </div>

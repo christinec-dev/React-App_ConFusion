@@ -31,3 +31,7 @@ address{
 .navbar-dark {
     background-color: #512DA8;
 }
+
+.card-row {
+    margin: 40px;
+}

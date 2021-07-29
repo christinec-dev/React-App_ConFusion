@@ -2,16 +2,19 @@
 import React, {Component} from 'react';
 import Main from './components/mainComponent';
 import './App.css';
+import { BrowserRouter } from 'react-router-dom';
 
 //creates App component
 class App extends Component {
     
   render () {
     return (    
-     /* The Main component from the mainComponent.js file is rendered here and displayed when the index.js is loaded */
-    <div className="App">
-      <Main />
-    </div>
+      //Increases navigation fluency and enabled main component 
+      <BrowserRouter>
+      <div className="App">
+        <Main />
+      </div>
+    </BrowserRouter>
   );
   }
 }
