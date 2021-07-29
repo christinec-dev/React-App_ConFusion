@@ -32,17 +32,17 @@ import { Link } from 'react-router-dom';
         if(comments != null) {
             return (
                 //col-12 for sm and xs, and col-5 for md and lg screens with margin @ 1
-                <div className="col-12 col-md-5 m-1">
-                    {/* Displays the comment title, and details of author, date and comment */}
-                    <h4>Comments</h4>                  
-                    {/* //will iterate (map) over the comments list and return each key (item) uniquely */}
-                    <ul className="list-unstyled">
-                        { comments.map (comment => (
-                       <li key={comment.id}>
-                            <p>{comment.comment}</p>
-                            <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
-                        </li>        
-                    ))} 
+                <div>
+                {/* Displays the comment title, and details of author, date and comment */}
+                <h4>Comments</h4>                  
+                {/* //will iterate (map) over the comments list and return each key (item) uniquely */}
+                <ul className="list-unstyled">
+                    { comments.map (comment => (
+                    <li key={comment.id}>
+                        <p>{comment.comment}</p>
+                        <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
+                    </li>        
+                ))} 
                  </ul>
              </div>
              );
@@ -57,8 +57,6 @@ import { Link } from 'react-router-dom';
 
     //This will return a comment list that will be defined
     const DishDetail = (props) => {
-        //define dish (otherwise TypeError occurs)
-        let dish;
         //if the dish is selected, show the details and comments of the dish in respected column order
         if (props.dish!=null) {
             return(
