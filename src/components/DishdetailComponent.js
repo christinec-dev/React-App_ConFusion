@@ -1,7 +1,8 @@
 //package and component imports
 import React from 'react';
-import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
-
+import { Card, CardImg, CardTitle, Breadcrumb, BreadcrumbItem,CardBody, CardText } from 'reactstrap';
+import { Link } from 'react-router-dom';
+ 
     //Turn the component into a functional component method 1
     //if dish is clicked it will show card details, else nothing
     function RenderDish({dish}) {
@@ -26,33 +27,31 @@ import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
     }
 
     //if dish is clicked it will show dish comments, else nothing
-    function RenderComments({array}) {
-        //if dish array is not equal to null, display comments in half grid
-        if (array.length !== 0) {
+    function RenderComments({comments}) {
+        //if dish comments is not equal to null, display comments in half grid
+        if(comments != null) {
             return (
                 //col-12 for sm and xs, and col-5 for md and lg screens with margin @ 1
                 <div className="col-12 col-md-5 m-1">
                     {/* Displays the comment title, and details of author, date and comment */}
                     <h4>Comments</h4>                  
                     {/* //will iterate (map) over the comments list and return each key (item) uniquely */}
-                    { array.map (comment => (
-                        <ul className="list-unstyled">
-                            <li>
-                                <p>{comment.comment}</p>
-                                <p><i> - {comment.author} </i>, {new Intl.DateTimeFormat ('en-US',  {year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}</p>
-                            </li>
-                        </ul>
-                    ))
-                    }
-                </div>
-            );
-        }
+                    <ul className="list-unstyled">
+                        { comments.map (comment => (
+                       <li key={comment.id}>
+                            <p>{comment.comment}</p>
+                            <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
+                        </li>        
+                    ))} 
+                 </ul>
+             </div>
+             );
+        } 
         //if the dish contains nothing, show nothing
         else {
             return (
                 <div></div>
             );
-
         }
     }
 
@@ -61,25 +60,33 @@ import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
         //define dish (otherwise TypeError occurs)
         let dish;
         //if the dish is selected, show the details and comments of the dish in respected column order
-        if (props.selectedDish) {
-            dish = (
-                <div className="row">
-                    <RenderDish dish={props.dish} />
-                    <RenderComments array={props.selectedDish.comments} />
+        if (props.dish!=null) {
+            return(
+                <div className="container">
+                    <div className="row">
+                        <Breadcrumb>
+                            <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                            <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                        </Breadcrumb>
+                        <div className="col-12">
+                            <h3>{props.dish.name}</h3>
+                            <hr />
+                        </div>                
+                    </div>
+                    <div className="row">
+                        <div className="col-12 col-md-5 m-1">
+                            <RenderDish dish={props.dish} />
+                        </div>
+                        <div className="col-12 col-md-5 m-1">
+                            <RenderComments comments={props.comments} />
+                        </div> 
+                    </div>
                 </div>
-            )
-        //if the dish is not selected, show nothing
+            );
         } else {
-            dish = <div></div>
+            return <div></div>
         }
-        //output the respective dish
-        return (
-            <div className="container">
-                {dish}
-            </div>
-        );
-        }
- 
+    }
 
 //exports it for use in other files
 export default DishDetail;
