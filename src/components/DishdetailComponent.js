@@ -1,21 +1,10 @@
 //package and component imports
-import React, { Component } from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import React from 'react';
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
-//creates DishDetail component
-class DishDetail extends Component {
-     //define a constructor for it
-    constructor (props) {
-
-    //Props is read-only and are used to pass data, whereas state is for managing data and can be modified by its own component
-
-    //required when you create a component in react
-    super(props);
-
-    }
-
-   //if dish is clicked it will show card details, else nothing
-    renderDish(dish) {
+    //Turn the component into a functional component method 1
+    //if dish is clicked it will show card details, else nothing
+    function RenderDish({dish}) {
         //if dish array is not equal to null, display details in half grid
         if (dish != null)
             return (
@@ -37,9 +26,9 @@ class DishDetail extends Component {
     }
 
     //if dish is clicked it will show dish comments, else nothing
-    renderComments(array) {
+    function RenderComments({array}) {
         //if dish array is not equal to null, display comments in half grid
-        if (array.length != 0) {
+        if (array.length !== 0) {
             return (
                 //col-12 for sm and xs, and col-5 for md and lg screens with margin @ 1
                 <div className="col-12 col-md-5 m-1">
@@ -50,7 +39,7 @@ class DishDetail extends Component {
                         <ul className="list-unstyled">
                             <li>
                                 <p>{comment.comment}</p>
-                                <p><i> - {comment.author} </i>, {comment.date}</p>
+                                <p><i> - {comment.author} </i>, {new Intl.DateTimeFormat ('en-US',  {year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}</p>
                             </li>
                         </ul>
                     ))
@@ -68,15 +57,15 @@ class DishDetail extends Component {
     }
 
     //This will return a comment list that will be defined
-    render() {
+    const DishDetail = (props) => {
         //define dish (otherwise TypeError occurs)
         let dish;
         //if the dish is selected, show the details and comments of the dish in respected column order
-        if (this.props.selectedDish) {
+        if (props.selectedDish) {
             dish = (
                 <div className="row">
-                    {this.renderDish(this.props.selectedDish)}
-                    {this.renderComments(this.props.selectedDish.comments)}
+                    <RenderDish dish={props.dish} />
+                    <RenderComments array={props.selectedDish.comments} />
                 </div>
             )
         //if the dish is not selected, show nothing
@@ -90,7 +79,7 @@ class DishDetail extends Component {
             </div>
         );
         }
-    }
+ 
 
 //exports it for use in other files
 export default DishDetail;
