@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
 import Menu from './menuComponent';
+import Header from './HeaderComponent';
+import Footer from './FooterComponent';
 import DishDetail from './DishDetailComponent';
 import { DISHES } from '../shared/dishes';
 
@@ -32,19 +33,17 @@ class Main extends Component {
     return (    
     //To create html structures in React we always define it via the className strucutre
     <div>
-      
-      {/* This will create a layour based on our individual component files. For example, if we have a navbarComponent file, then we just import it from there and insert it here, without having to code the whole thing. */}
-      <Navbar color="primary" dark expand="md">
-        <div className="container">
-        <NavbarBrand href="/"> Ristorante Con Fusion</NavbarBrand>
-        </div>
-      </Navbar>
-  
+        {/* Will display the Header Component */}
+        <Header />
+
         {/* The component from the component files are rendered here and displayed when the index.js is loaded */}
         <Menu dishes={this.state.dishes} onClick={(dishId) => this.onDishSelect(dishId)} />
 
         {/* Will only render the array items that matches the properties of the selected dish */}
         <DishDetail dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} />
+
+        {/* Will display the Footer Component */}
+        <Footer />
     </div>
   );
   }

@@ -1,7 +1,6 @@
 //package and compnent imports
 import React, {Component} from 'react';
 import Main from './components/mainComponent';
-
 import './App.css';
 
 //creates App component
