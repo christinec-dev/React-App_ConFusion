@@ -16,7 +16,7 @@ class App extends Component {
     return ( 
       //makes redux store available to all components   
       <Provider store={store}>
-      //Increases navigation fluency and enabled main component 
+      {/*Increases navigation fluency and enabled main component*/} 
       <BrowserRouter>
       <div className="App">
         <Main />

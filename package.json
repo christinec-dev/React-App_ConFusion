@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
-    "bootstrap": "^5.0.2"
+    "bootstrap": "^5.0.2",
+    "react-redux-form": "^1.16.14"
   }
 }
