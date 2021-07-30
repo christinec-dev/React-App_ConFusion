@@ -41,8 +41,6 @@ class Header extends Component {
       event.preventDefault();
     }
 
-        
-
     render() {
         return (
             //this is a react fragment (<> </>) that allows us to group together react elements without divs
