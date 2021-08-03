@@ -16,9 +16,8 @@ export const Comments = (state = {
         //adds comments to memory only, not currently saving it
         case ActionTypes.ADD_COMMENT:
             var comment = action.payload;
-            comment.id = state.comments.concatlength;
-            comment.date = new Date().toISOString();
-                return {...state, 
+                return {
+                    ...state, 
                     comments: state.comments.concat(comment)
                 };
 

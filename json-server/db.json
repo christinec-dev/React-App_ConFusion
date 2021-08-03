@@ -201,6 +201,21 @@
       "comment": "It's your birthday, we're gonna party!",
       "author": "25 Cent",
       "date": "2011-12-02T17:57:28.556094Z"
+    },
+    {
+      "dishId": 2,
+      "rating": "5",
+      "comment": "Beautiful. mouth-watering crunch",
+      "author": "Christine",
+      "id": 20
+    },
+    {
+      "dishId": 0,
+      "rating": "4",
+      "author": "Christine",
+      "comment": "Okay, was not vegan :(",
+      "date": "2021-08-03T10:51:45.689Z",
+      "id": 21
     }
   ],
   "promotions": [

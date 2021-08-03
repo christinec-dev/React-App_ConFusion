@@ -45,8 +45,8 @@ class CommentForm extends Component {
     //enables submit event and adds comment
     handleSubmit(values) {
         this.toggleModal();
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
-      }   
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
+    }   
     
 
     render() {
@@ -151,7 +151,7 @@ class CommentForm extends Component {
     }
 
   //if dish is clicked it will show dish comments, else nothing
-  function RenderComments({comments, dishId, addComment }) {
+  function RenderComments({comments, dishId, postComment }) {
     //if dish comments is not equal to null, display comments in half grid
     if(comments != null) {
         return (
@@ -169,7 +169,7 @@ class CommentForm extends Component {
                 </li>     
             ))} 
              </ul>
-             <CommentForm dishId={dishId} addComment={addComment}/> 
+             <CommentForm dishId={dishId} postComment={postComment} />
          </div>
          );
     } 
@@ -219,7 +219,7 @@ class CommentForm extends Component {
                             <RenderDish dish={props.dish} />
                         </div>
                     <div className="col-12 col-md-5 m-1">
-                        <RenderComments comments={props.comments} dishId={props.dish.id} addComment={props.addComment} 
+                        <RenderComments comments={props.comments} dishId={props.dish.id} postComment={props.postComment} 
                         /> 
                     </div>
                 </div>
