@@ -4,6 +4,7 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading} from './LoadingComponent'
+import { baseUrl } from '../shared/baseUrl'
 
 //Redux form validation definition
 const required = (val) => val && val.length;
@@ -135,7 +136,7 @@ class CommentForm extends Component {
                 //col-12 for sm and xs, and col-5 for md and lg screens with margin @ 1
                 <Card className="col-12 col-md-5 m-1">
                    {/* Displays the dish image, details and name */}
-                    <CardImg width="100%" src={dish.image} alt={dish.name} />
+                    <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                     <CardBody>
                         <CardTitle>{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>

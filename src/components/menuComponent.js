@@ -2,7 +2,8 @@
 import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Loading} from './LoadingComponent'
+import { Loading} from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl'
 
         //Turn the component into a functional component method 1
         function RenderMenuItem ({dish, onClick}) {
@@ -10,7 +11,7 @@ import { Loading} from './LoadingComponent'
                 // This will create the layout of the menu items by displaying the image, name and -description- of each menu item
                 <Card>
                     <Link to={`/menu/${dish.id}`}>
-                        <CardImg src={dish.image} alt={dish.name} />
+                        <CardImg src={baseUrl + dish.image} alt={dish.name} />
                         <CardImgOverlay>
                             <CardTitle>{dish.name}</CardTitle>
                         </CardImgOverlay>
