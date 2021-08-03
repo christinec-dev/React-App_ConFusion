@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading} from './LoadingComponent'
 import { baseUrl } from '../shared/baseUrl'
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 //Redux form validation definition
 const required = (val) => val && val.length;
@@ -133,15 +134,22 @@ class CommentForm extends Component {
         //if dish array is not equal to null, display details in half grid
         if (dish != null)
             return (
-                //col-12 for sm and xs, and col-5 for md and lg screens with margin @ 1
-                <Card className="col-12 col-md-5 m-1">
-                   {/* Displays the dish image, details and name */}
-                    <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>   
+                <FadeTransform
+                    in
+                    transformProps={{
+                        exitTransform: 'scale(0.5) translateY(-50%)'
+                    }}>
+                    //col-12 for sm and xs, and col-5 for md and lg screens with margin @ 1
+                    <Card className="col-12 col-md-5 m-1">
+                    {/* Displays the dish image, details and name */}
+                        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+                        <CardBody>
+                            <CardTitle>{dish.name}</CardTitle>
+                            <CardText>{dish.description}</CardText>
+                        </CardBody>
+                    </Card>            
+                </FadeTransform>
+
             );
         //if the dish contains nothing, show nothing
         else
@@ -161,13 +169,16 @@ class CommentForm extends Component {
             <h4>Comments</h4>                  
             {/* //will iterate (map) over the comments list and return each key (item) uniquely */}
             <ul className="list-unstyled">
-                { comments.map (comment => (
-                <li key={comment.id}>
-                    <p>{comment.comment}</p>
-                    <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</p>   
-       
-                </li>     
-            ))} 
+                <Stagger in>
+                    { comments.map (comment => (
+                    <Fade in>
+                    <li key={comment.id}>
+                        <p>{comment.comment}</p>
+                        <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</p>   
+                    </li>   
+                    </Fade>  
+                ))} 
+                </Stagger>
              </ul>
              <CommentForm dishId={dishId} postComment={postComment} />
          </div>
