@@ -7,7 +7,8 @@ import Footer from './FooterComponent';
 import DishDetail from './DishDetailComponent';
 import Contact from './ContactComponent';
 import { Switch, Route, Redirect, withRouter} from 'react-router-dom';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { addComment } from '../redux/ActionCreator'
 
 //maps redux state to props of main component to make it avail
 const mapStateToProps = state => {
@@ -18,6 +19,11 @@ const mapStateToProps = state => {
     leaders: state.leaders
    }   
 }
+
+//maps dispatch to addComment parameters to return the actiontype for comments.js that will be used to add comments
+const mapDispatchToProps = (dispatch) => ({
+  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+})
 
 //creates Main component which will act as main container for appication
 class Main extends Component {
@@ -35,8 +41,10 @@ class Main extends Component {
     //configures homepage to home component from HomeComponent.js
     const DishWithId = ({ match }) => {
       return (
-        <DishDetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
+        <DishDetail 
+          dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
           comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))}
+          addComment={this.props.addComment}
         />
       );
     }
@@ -76,4 +84,4 @@ class Main extends Component {
 }
 
 //exports it for use in other files
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

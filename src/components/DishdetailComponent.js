@@ -40,10 +40,10 @@ class CommentForm extends Component {
         }) 
     }
 
-    //enables submit event
+    //enables submit event and adds comment
     handleSubmit(values) {
         this.toggleModal();
-        alert("Comment Successfully Added");
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
       }   
     
 
@@ -112,7 +112,7 @@ class CommentForm extends Component {
                                 </Col>
                             </Row>
                             {/* Button to submit form */} 
-                            <Button type="submit" value="submit" color="primary">Submit</Button>
+                            <Button type="submit" value="submit" color="primary" onSubmit={ this.handleSubmit }>Submit</Button>
                         </LocalForm>
                     </ModalBody>
                 </Modal>
@@ -139,7 +139,7 @@ class CommentForm extends Component {
                         <CardTitle>{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>
                     </CardBody>
-                </Card>
+                </Card>   
             );
         //if the dish contains nothing, show nothing
         else
@@ -149,7 +149,7 @@ class CommentForm extends Component {
     }
 
   //if dish is clicked it will show dish comments, else nothing
-  function RenderComments({comments}) {
+  function RenderComments({comments, dishId, addComment }) {
     //if dish comments is not equal to null, display comments in half grid
     if(comments != null) {
         return (
@@ -162,10 +162,12 @@ class CommentForm extends Component {
                 { comments.map (comment => (
                 <li key={comment.id}>
                     <p>{comment.comment}</p>
-                    <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</p>            
-                </li>        
+                    <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</p>   
+       
+                </li>     
             ))} 
              </ul>
+             <CommentForm dishId={dishId} addComment={addComment}/> 
          </div>
          );
     } 
@@ -197,10 +199,8 @@ class CommentForm extends Component {
                             <RenderDish dish={props.dish} />
                         </div>
                     <div className="col-12 col-md-5 m-1">
-                        <RenderComments comments={props.comments} dishId={props.dish.id} />
-                        
-                    {/* Button to open modal */} 
-                    <CommentForm />
+                        <RenderComments comments={props.comments} dishId={props.dish.id} addComment={props.addComment} 
+                        /> 
                     </div>
                 </div>
             </div>
